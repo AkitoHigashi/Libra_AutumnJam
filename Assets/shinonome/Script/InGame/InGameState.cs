@@ -23,7 +23,7 @@ public class InGameState : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        _mainGameManager = GameObject.FindWithTag("MainGameManager");
+        _mainGameManager = GameObject.FindWithTag("InGameManager");
         _itemManager = GameObject.FindWithTag("ItemManager");
 
         _gameData = _mainGameManager.GetComponent<InGameData>();
