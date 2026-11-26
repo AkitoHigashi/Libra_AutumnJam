@@ -10,14 +10,9 @@ public class ItemSpawner : MonoBehaviour
     public List<ItemData> SpawnedItems { get; private set; }
         = new List<ItemData>();
 
-    // ゲーム開始時にアイテムを生成する
-    private void Start()
-    {
-        SpawnItems();
-    }
 
     // すべてのエリアのアイテムを生成する
-    private void SpawnItems()
+    public void SpawnItems()
     {
         // すでに選ばれたアイテムを記録する
         // 同じアイテムが重複して生成されないようにする
