@@ -93,7 +93,7 @@ public class ItemSpawner : MonoBehaviour
             // 選ばれたアイテムを使用済みとして記録する
             usedItems.Add(selectedItem);
 
-            // 選ばれたアイテムを配置場所に生成する
+            // 選ばれたアイテムを配置場所に生成するよ
             ItemData spawnedItem = Instantiate(
                 selectedItem,
                 spawnPosition.position,
