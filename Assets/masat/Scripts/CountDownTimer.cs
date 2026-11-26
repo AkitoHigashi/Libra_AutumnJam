@@ -17,6 +17,8 @@ public class CountDownTimer : MonoBehaviour
     float _seachTimeLimit;
     /// <summary>今が「探す時間」かどうか判断する</summary>
     bool _isSearchPhase = false;
+
+    bool _isActive = false;
    
     void Start()
     {
@@ -29,20 +31,26 @@ public class CountDownTimer : MonoBehaviour
     }
     
 
-    void Update(Action onComplete)
+    void Update()
     {
+        if(!_isActive) TimerCount(() => { });
+
+    }
+    public void TimerCount(Action onComplete)
+    {
+        _isActive = true;
         if (_isFinished)
         {
 
             return;
         }
 
-            _remainingTime -= Time.deltaTime;
-        if(_remainingTime <= 0f)
+        _remainingTime -= Time.deltaTime;
+        if (_remainingTime <= 0f)
         {
             /*タイムアップした時間が「練り歩き時間」だったら、
             「探す時間」に移行する*/
-            if(!_isSearchPhase)
+            if (!_isSearchPhase)
             {
                 _isSearchPhase = true;
                 _remainingTime = _seachTimeLimit;
@@ -50,7 +58,7 @@ public class CountDownTimer : MonoBehaviour
             else
             {
                 //「探す時間」がタイムアップしたら停止する
-                 
+
                 _remainingTime = 0f;
                 _isFinished = true;
             }
