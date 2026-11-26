@@ -15,6 +15,7 @@ public class InGameData : MonoBehaviour
     public List<ItemData> area3Item = new ();//エリア3のアイテムのリスト
     public Transform playerStartPos;//プレイヤーのスタート位置(リセット位置)
     public ItemData picUpItem;//抽選されたアイテム
+    public float SearchTime = 20;
 }
 
 public enum GameState
