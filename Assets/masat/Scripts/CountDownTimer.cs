@@ -22,12 +22,6 @@ public class CountDownTimer : MonoBehaviour
    
     void Start()
     {
-        if (_inGameData == null)
-        {
-            Debug.LogWarning("CountDownTimer: InGameDataが未設定です。", this);
-            enabled = false;
-            return;
-        }
         _walkTimeLimit = _inGameData.WalkTime;
         _seachTimeLimit = _inGameData.SearchTime;
         _isFinished = false;
@@ -39,13 +33,11 @@ public class CountDownTimer : MonoBehaviour
 
     void Update()
     {
-        if (SceneManagement.IsTransitioning || InGameData.gameState == GameState.None) return;
         if(!_isActive) TimerCount(() => { });
 
     }
     public void TimerCount(Action onComplete)
     {
-        if (SceneManagement.IsTransitioning || InGameData.gameState == GameState.None) return;
         _isActive = true;
         if (_isFinished)
         {
