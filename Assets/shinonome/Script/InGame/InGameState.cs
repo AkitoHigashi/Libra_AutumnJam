@@ -1,17 +1,21 @@
-using UnityEngine;
 using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class InGameState : MonoBehaviour
 {
     GameObject _mainGameManager;
     InGameData _gameData;
+    ScoreCalculator _scoreCalculator;
     bool nowAction = false;
+    float _nowTime;
     private void OnEnable()
     {
         _mainGameManager = GameObject.FindWithTag("MainGameManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
+        _scoreCalculator = _mainGameManager.GetComponent<ScoreCalculator>();
     }
-    private void Update()
+    private void Update()//各ゲームステートでそれぞれの処理を行う
     {
         if (nowAction) return;
         nowAction = true;
@@ -29,6 +33,14 @@ public class InGameState : MonoBehaviour
 
             case GameState.Walk:
                 WarkTime(() => 
+                {
+                    InGameData.gameState = GameState.lottery;
+                    nowAction = false;
+                });
+                break;
+
+            case GameState.lottery:
+                lottery(() =>
                 {
                     InGameData.gameState = GameState.lottery;
                     nowAction = false;
@@ -62,13 +74,22 @@ public class InGameState : MonoBehaviour
 
     }
 
-    void SearchTime(Action onComplete)
+    void lottery(Action onComplete)
     {
 
     }
 
+    void SearchTime(Action onComplete)
+    {
+        while(_gameData.SearchTime > _gameData.nowSearchTime)
+        {
+            _gameData.nowSearchTime += Time.deltaTime;
+        }
+    }
+
     void Instruction(Action onComplete)
     {
-
+        bool isClear = true;
+        _scoreCalculator.CalculateScore(isClear, _gameData.picUpItem,)
     }
 }
