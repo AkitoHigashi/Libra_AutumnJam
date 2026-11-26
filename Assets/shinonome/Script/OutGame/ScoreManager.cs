@@ -10,6 +10,10 @@ public class ScoreManager : MonoBehaviour
     /// プレイヤー名とスコアのデータを格納する静的リスト（シーンをまたいで参照可能）
     /// </summary>
     public static new List<ScoreAndName> scoreAndPlayerNameList = new();
+    /// <summary>
+    /// 新規のプレイヤー名とスコアのデータを格納する静的リスト（シーンをまたいで参照可能）
+    /// </summary>
+    public static ScoreAndName newPlayerData;
 }
 
 /// <summary>
@@ -18,7 +22,7 @@ public class ScoreManager : MonoBehaviour
 public struct ScoreAndName
 {
     /// <summary>プレイヤーの名前</summary>
-    public string PlaterName;
+    public string PlayerName;
 
     /// <summary>記録されたスコア</summary>
     public float Score;
