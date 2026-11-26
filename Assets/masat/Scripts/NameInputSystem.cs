@@ -7,6 +7,7 @@ public class NameInputSystem : MonoBehaviour
     [SerializeField]InputField _nameInputField;
     [SerializeField] Text _displayNameText;
     [SerializeField] Text _errorText;
+    [SerializeField] SceneManagement _sceneManagement;
    
     void Start()
     {
@@ -22,7 +23,7 @@ public class NameInputSystem : MonoBehaviour
         }
         
         _displayNameText.text = playerName;
-         
+        _sceneManagement.GameSceneLoad();
     
     }
     
