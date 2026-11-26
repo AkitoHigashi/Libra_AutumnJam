@@ -1,15 +1,19 @@
-using UnityEngine;
 using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class InGameState : MonoBehaviour
 {
     GameObject _mainGameManager;
     InGameData _gameData;
+    ScoreCalculator _scoreCalculator;
     bool nowAction = false;
+    float _nowTime;
     private void OnEnable()
     {
         _mainGameManager = GameObject.FindWithTag("MainGameManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
+        _scoreCalculator = _mainGameManager.GetComponent<ScoreCalculator>();
     }
     private void Update()//各ゲームステートでそれぞれの処理を行う
     {
@@ -77,11 +81,15 @@ public class InGameState : MonoBehaviour
 
     void SearchTime(Action onComplete)
     {
-
+        while(_gameData.SearchTime > _gameData.nowSearchTime)
+        {
+            _gameData.nowSearchTime += Time.deltaTime;
+        }
     }
 
     void Instruction(Action onComplete)
     {
-
+        bool isClear = true;
+        _scoreCalculator.CalculateScore(isClear, _gameData.picUpItem,)
     }
 }

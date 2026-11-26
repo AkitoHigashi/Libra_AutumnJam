@@ -18,7 +18,7 @@ public class InGameData : MonoBehaviour
     public ItemData picUpItem;//抽選されたアイテム
     public float WalkTime = 20;//練り歩ける時間
     public float SearchTime = 10;//探せる時間
-    public float NowSearchTime;//残りの探せる時間
+    public float nowSearchTime;//残りの探せる時間
     public int trueIntsum;//正解の合計回数
 }
 
