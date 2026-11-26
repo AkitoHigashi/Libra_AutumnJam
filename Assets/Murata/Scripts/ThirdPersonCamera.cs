@@ -24,7 +24,7 @@ public class ThirdPersonCamera : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Mouse.current == null || _playerSettings == null)
+        if (SceneManagement.IsTransitioning || Mouse.current == null || _playerSettings == null)
         {
             return;
         }
