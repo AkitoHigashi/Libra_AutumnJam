@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class InGameState : MonoBehaviour
 {
@@ -12,14 +13,25 @@ public class InGameState : MonoBehaviour
     }
     private void Update()
     {
+        if (nowAction) return;
         switch (InGameData.gameState)
         {
             case GameState.CountDown:
-                StartCountDown();
+                {
+                  nowAction = true;
+                    StartCountDown(() =>
+                    {
+                        InGameData.gameState = GameState.Walk;
+                        nowAction = false;
+                    });
+                }
                 break;
 
             case GameState.Walk:
-                WarkTime();
+                WarkTime(() => 
+                {
+
+                });
                 break;
 
             case GameState.Search:
@@ -31,22 +43,22 @@ public class InGameState : MonoBehaviour
                 break;
         }
     }
-    void StartCountDown()
+    void StartCountDown(Action onComplete)
     {
 
     }
 
-    void WarkTime()
+    void WarkTime(Action onComplete)
     {
 
     }
 
-    void SearchTime()
+    void SearchTime(Action onComplete)
     {
 
     }
 
-    void Instruction()
+    void Instruction(Action onComplete)
     {
 
     }
