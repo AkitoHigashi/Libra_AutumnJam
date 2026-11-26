@@ -7,8 +7,10 @@ public class NameInputSystem : MonoBehaviour
     [SerializeField]InputField _nameInputField;
     [SerializeField] Text _displayNameText;
     [SerializeField] Text _errorText;
-
-    
+    /// <summary>名前入力画面UI</summary>
+    [SerializeField] GameObject _nameInputCanvas;
+    /// <summary>ゲームプレイ中画面UI</summary>
+    [SerializeField] GameObject _playingCanvas;
     void Start()
     {
         
@@ -23,6 +25,9 @@ public class NameInputSystem : MonoBehaviour
         }
         
         _displayNameText.text = playerName;
+        _nameInputCanvas.SetActive(false);
+        _playingCanvas.SetActive(true); 
+    
     }
     
 }

@@ -9,17 +9,23 @@ public class CountDownTimer : MonoBehaviour
     /// <summary>残り時間</summary>
     float remainingTime;
     /// <summary>時間切れかどうかを判断する</summary>
-    bool isFinished = false;
-    void Start()
+    public bool isFinished = false;
+    
+    
+    public void CountStart()
     {
         remainingTime = _timeLimit;
     }
 
     void Update()
     {
-        if (isFinished) return;
+        if (isFinished)
+        {
 
-        remainingTime -= Time.deltaTime;
+            return;
+        }
+
+            remainingTime -= Time.deltaTime;
         if(remainingTime <= 0f)
         {
             remainingTime = 0f;
