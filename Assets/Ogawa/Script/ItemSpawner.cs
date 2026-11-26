@@ -37,14 +37,32 @@ public class ItemSpawner : MonoBehaviour
         List<ItemData> itemList,
         HashSet<ItemData> usedItems)
     {
-        // エリア内の配置場所を1つずつ確認する
-        foreach (Transform spawnPosition in spawnPositions)
+        // スポーンポイントのリストをコピーする
+        List<Transform> shuffledPositions =
+            new List<Transform>(spawnPositions);
+
+        // スポーンポイントをランダムな順番に並べ替える
+        for (int i = 0; i < shuffledPositions.Count; i++)
+        {
+            // i番目以降からランダムな位置を選ぶ
+            int randomIndex = Random.Range(i, shuffledPositions.Count);
+
+            // i番目とランダムに選んだ位置を入れ替える
+            Transform temp = shuffledPositions[i];
+            shuffledPositions[i] = shuffledPositions[randomIndex];
+            shuffledPositions[randomIndex] = temp;
+        }
+
+        // ランダムな順番になったスポーンポイントを1つずつ確認する
+        foreach (Transform spawnPosition in shuffledPositions)
         {
             // 配置場所が設定されていない場合は次の場所へ進む
             if (spawnPosition == null)
             {
                 continue;
             }
+
+            // ここから下は、今までのアイテム抽選・スポーン処理をそのまま続ける
 
             // まだ使用されていないアイテムを入れるリスト
             List<ItemData> availableItems = new List<ItemData>();
@@ -75,7 +93,7 @@ public class ItemSpawner : MonoBehaviour
             // 選ばれたアイテムを使用済みとして記録する
             usedItems.Add(selectedItem);
 
-            // 選ばれたアイテムを配置場所に生成する
+            // 選ばれたアイテムを配置場所に生成するよ
             ItemData spawnedItem = Instantiate(
                 selectedItem,
                 spawnPosition.position,
