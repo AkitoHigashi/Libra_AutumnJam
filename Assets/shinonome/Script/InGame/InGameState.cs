@@ -11,7 +11,7 @@ public class InGameState : MonoBehaviour
         _mainGameManager = GameObject.FindWithTag("MainGameManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
     }
-    private void Update()
+    private void Update()//各ゲームステートでそれぞれの処理を行う
     {
         if (nowAction) return;
         nowAction = true;
@@ -29,6 +29,14 @@ public class InGameState : MonoBehaviour
 
             case GameState.Walk:
                 WarkTime(() => 
+                {
+                    InGameData.gameState = GameState.lottery;
+                    nowAction = false;
+                });
+                break;
+
+            case GameState.lottery:
+                lottery(() =>
                 {
                     InGameData.gameState = GameState.lottery;
                     nowAction = false;
@@ -58,6 +66,11 @@ public class InGameState : MonoBehaviour
     }
 
     void WarkTime(Action onComplete)
+    {
+
+    }
+
+    void lottery(Action onComplete)
     {
 
     }
