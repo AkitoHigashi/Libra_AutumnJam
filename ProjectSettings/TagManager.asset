@@ -7,6 +7,7 @@ TagManager:
   - InGameManager
   - ItemManager
   - MainGameManager
+  - Stage
   layers:
   - Default
   - TransparentFX

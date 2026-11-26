@@ -16,9 +16,9 @@ public class ScoreCalculator : MonoBehaviour
 
     private void Start()
     {
-        _inGameManager = GameObject.FindWithTag("MainGameManager");
+        _inGameManager = GameObject.FindWithTag("InGameManager");
         _gameData = _inGameManager.GetComponent<InGameData>();
-        UpdateScoreUI();
+        //UpdateScoreUI();
     }
 
     // 正誤判定を受け取って得点を計算
