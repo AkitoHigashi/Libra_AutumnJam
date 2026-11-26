@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ScoreCalculator : MonoBehaviour
 {
+    GameObject _mainGameManager;
+    InGameData _gameData;
     [Header("Score")]
     [SerializeField] private int _score = 0;
     [SerializeField] private int _baseScore = 10;
@@ -14,6 +16,8 @@ public class ScoreCalculator : MonoBehaviour
 
     private void Start()
     {
+        _mainGameManager = GameObject.FindWithTag("MainGameManager");
+        _gameData = _mainGameManager.GetComponent<InGameData>();
         UpdateScoreUI();
     }
 
@@ -26,24 +30,16 @@ public class ScoreCalculator : MonoBehaviour
         {
             // アイテムの基本得点
             // TODO: アイテム追加得点の参照先を確認する
-            int totalScore = _baseScore + itemData.item.point;
+            int totalPoint = _baseScore + itemData.item.point;
 
-            _score += totalScore;
-
-            Debug.Log("正解！ +" + totalScore + "点");
+            Debug.Log("正解！ +" + totalPoint + "点");
 
             // 正解アイテム取得時のみ時間ボーナスを追加
-            AddTimeBonus(remainingTime);
+            AddTimeBonus(remainingTime,totalPoint);
         }
         else
         {
-            _score -= _penaltyScore;
-
-            if (_score < 0)
-            {
-                _score = 0;
-            }
-
+            Penalty();
             Debug.Log("不正解！ -" + _penaltyScore + "点");
         }
 
@@ -51,11 +47,11 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     // 残り時間によるボーナス
-    private void AddTimeBonus(float remainingTime)
+    private void AddTimeBonus(float remainingTime , int totalPoint)
     {
         int bonus = Mathf.FloorToInt(remainingTime) * _timeBonus;
 
-        _score += bonus;
+        _gameData.sumPoint +=(totalPoint + bonus);
 
         Debug.Log("時間ボーナス：+" + bonus + "点");
     }
@@ -66,9 +62,13 @@ public class ScoreCalculator : MonoBehaviour
         _scoreText.text = "Score: " + _score;
     }
 
-    // 現在の得点を取得
-    public int GetScore()
+    private void Penalty()
     {
-        return _score;
+        _gameData.sumPoint -= _penaltyScore;
+
+        if (_gameData.sumPoint < 0)
+        {
+            _score = 0;
+        }
     }
 }
