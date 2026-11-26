@@ -14,11 +14,11 @@ public class InGameState : MonoBehaviour
     private void Update()
     {
         if (nowAction) return;
+        nowAction = true;
         switch (InGameData.gameState)
         {
             case GameState.CountDown:
                 {
-                  nowAction = true;
                     StartCountDown(() =>
                     {
                         InGameData.gameState = GameState.Walk;
@@ -30,16 +30,25 @@ public class InGameState : MonoBehaviour
             case GameState.Walk:
                 WarkTime(() => 
                 {
-
+                    InGameData.gameState = GameState.lottery;
+                    nowAction = false;
                 });
                 break;
 
             case GameState.Search:
-                SearchTime();
+                SearchTime(() =>
+                {
+                    InGameData.gameState = GameState.Instructions;
+                    nowAction = false;
+                });
                 break;
 
             case GameState.Instructions:
-                Instruction();
+                Instruction(() =>
+                {
+                    InGameData.gameState = GameState.CountDown;
+                    nowAction = false;
+                });
                 break;
         }
     }

@@ -18,7 +18,7 @@ public class InGameData : MonoBehaviour
     public ItemData picUpItem;//抽選されたアイテム
     public float WalkTime = 20;//練り歩ける時間
     public float SearchTime = 10;//探せる時間
-    public float NoeSearchTime;
+    public float NowSearchTime;//残りの探せる時間
 }
 
 public enum GameState
@@ -26,6 +26,7 @@ public enum GameState
     None,
     CountDown,
     Walk,
+    lottery,
     Instructions,
     Search
 }
