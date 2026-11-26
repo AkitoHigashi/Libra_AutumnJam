@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Playables;
 
 public class ItemJudge : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class ItemJudge : MonoBehaviour
 
     // アイテムを削除するまでの待ち時間（秒）
     [SerializeField] private float _itemDestroyDelay = 5f;
+
+    //真偽判定後の処理
+    [SerializeField] private ScoreCalculator _scoreCalculator;
 
     // 正解したときに呼び出すイベント
     public UnityEvent onCorrect;
@@ -47,16 +51,7 @@ public class ItemJudge : MonoBehaviour
         _isJudging = true;
 
         // 判定結果に応じてイベントを呼び出す
-        if (isCorrect)
-        {
-            // 正解イベントを実行する
-            onCorrect?.Invoke();
-        }
-        else
-        {
-            // 不正解イベントを実行する
-            onIncorrect?.Invoke();
-        }
+        _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
 
         // 掴んだアイテムの子にあるCommonItemModelを探す
         Transform commonModel =
