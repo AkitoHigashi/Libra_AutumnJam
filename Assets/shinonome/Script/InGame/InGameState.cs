@@ -90,6 +90,6 @@ public class InGameState : MonoBehaviour
     void Instruction(Action onComplete)
     {
         bool isClear = true;
-        _scoreCalculator.CalculateScore(isClear, _gameData.picUpItem,)
+        _scoreCalculator.CalculateScore(isClear, _gameData.picUpItem, _gameData.nowSearchTime);
     }
 }
