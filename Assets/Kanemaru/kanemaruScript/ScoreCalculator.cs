@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ScoreCalculator : MonoBehaviour
 {
-    GameObject _mainGameManager;
+    GameObject _inGameManager;
     InGameData _gameData;
     [Header("Score")]
     [SerializeField] private int _score = 0;
@@ -16,8 +16,8 @@ public class ScoreCalculator : MonoBehaviour
 
     private void Start()
     {
-        _mainGameManager = GameObject.FindWithTag("MainGameManager");
-        _gameData = _mainGameManager.GetComponent<InGameData>();
+        _inGameManager = GameObject.FindWithTag("MainGameManager");
+        _gameData = _inGameManager.GetComponent<InGameData>();
         UpdateScoreUI();
     }
 

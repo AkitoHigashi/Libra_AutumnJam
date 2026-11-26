@@ -7,7 +7,7 @@ using UnityEngine;
 public class InGameData : MonoBehaviour
 {
     /// <summary>現在のインゲーム進行ステート</summary>
-    public static GameState gameState = GameState.None;
+    public static GameState gameState = GameState.CountDown;
 
     /// <summary>残りライフ（間違えられる回数）</summary>
     public int life = 3;
