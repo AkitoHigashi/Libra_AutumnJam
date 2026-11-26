@@ -74,7 +74,7 @@ public class InGameState : MonoBehaviour
         _gameData.nowSearchTime = 0;
         while(_gameData.WalkTime > _gameData.nowSearchTime)
         {
-
+            _gameData.nowSearchTime += Time.deltaTime;
         }
     }
 
@@ -84,7 +84,7 @@ public class InGameState : MonoBehaviour
     }
 
     void SearchTime(Action onComplete)
-    {
+    { 
         _gameData.nowSearchTime = 0;
         while(_gameData.SearchTime > _gameData.nowSearchTime || _gameData.isTake)
         {
