@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class CountDownTimer : MonoBehaviour
 {
     [SerializeField] InGameData _inGameData;
@@ -7,45 +8,54 @@ public class CountDownTimer : MonoBehaviour
     /// <summary>時間を表示するテキスト</summary>
     [SerializeField] Text _timerText;
     /// <summary>残り時間</summary>
-    float remainingTime;
+    float _remainingTime;
     /// <summary>時間切れかどうかを判断する</summary>
-    public bool isFinished = false;
+    public bool _isFinished = false;
     /// <summary>練り歩きカウントダウンの初期値（20秒）</summary>
     float _walkTimeLimit;
     /// <summary>探す時間のカウントダウンの初期値（10秒）</summary>
     float _seachTimeLimit;
-    /// <summary>今が「探す時間」かどうか判定する</summary>
+    /// <summary>今が「探す時間」かどうか判断する</summary>
     bool _isSearchPhase = false;
-
    
     void Start()
     {
         _walkTimeLimit = _inGameData.WalkTime;
         _seachTimeLimit = _inGameData.SearchTime;
-        
-    }
-    public void CountStart()
-    {
+        _isFinished = false;
         _isSearchPhase = false;
-        isFinished = false;
-        remainingTime = _walkTimeLimit;
-    }
+        _remainingTime = _walkTimeLimit;
 
-    void Update()
+    }
+    
+
+    void Update(Action onComplete)
     {
-        if (isFinished)
+        if (_isFinished)
         {
 
             return;
         }
 
-            remainingTime -= Time.deltaTime;
-        if(remainingTime <= 0f)
+            _remainingTime -= Time.deltaTime;
+        if(_remainingTime <= 0f)
         {
-            remainingTime = 0f;
-            isFinished = true;
-
+            /*タイムアップした時間が「練り歩き時間」だったら、
+            「探す時間」に移行する*/
+            if(!_isSearchPhase)
+            {
+                _isSearchPhase = true;
+                _remainingTime = _seachTimeLimit;
+            }
+            else
+            {
+                //「探す時間」がタイムアップしたら停止する
+                 
+                _remainingTime = 0f;
+                _isFinished = true;
+            }
         }
-        _timerText.text = remainingTime.ToString("00.00");
+        _timerText.text = _remainingTime.ToString("00.00");
+        onComplete?.Invoke();
     }
 }
