@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 public class CountDownTimer : MonoBehaviour
 {
     [SerializeField] InGameData _inGameData;
@@ -28,42 +29,42 @@ public class CountDownTimer : MonoBehaviour
         _isSearchPhase = false;
         _remainingTime = _walkTimeLimit;
 
+        StartCoroutine(TimerCount( () => { }));
     }
     
 
-    void Update()
-    {
-        if(!_isActive) TimerCount(() => { });
+      
 
-    }
-    public void TimerCount(Action onComplete)
+    
+    public IEnumerator TimerCount(Action onComplete)
     {
+        if (_isActive) yield break;
         _isActive = true;
-        if (_isFinished)
+        
+        while (!_isFinished)
         {
-
-            return;
-        }
-
-        _remainingTime -= Time.deltaTime;
-        if (_remainingTime <= 0f)
-        {
-            /*タイムアップした時間が「練り歩き時間」だったら、
-            「探す時間」に移行する*/
-            if (!_isSearchPhase)
+            _remainingTime -= Time.deltaTime;
+            if (_remainingTime <= 0f)
             {
-                _isSearchPhase = true;
-                _remainingTime = _seachTimeLimit;
-            }
-            else
-            {
-                //「探す時間」がタイムアップしたら停止する
+                /*タイムアップした時間が「練り歩き時間」だったら、
+                「探す時間」に移行する*/
+                if (!_isSearchPhase)
+                {
+                    _isSearchPhase = true;
+                    _remainingTime = _seachTimeLimit;
+                }
+                else
+                {
+                    //「探す時間」がタイムアップしたら停止する
 
-                _remainingTime = 0f;
-                _isFinished = true;
+                    _remainingTime = 0f;
+                    _isFinished = true;
+                }
             }
+            _timerText.text = _remainingTime.ToString("00.00");
+            yield return null;
         }
-        _timerText.text = _remainingTime.ToString("00.00");
+        _isActive = false;
         onComplete?.Invoke();
     }
 }
