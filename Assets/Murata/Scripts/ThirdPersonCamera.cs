@@ -1,19 +1,18 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Cinemachine;
 
 [RequireComponent(typeof(CinemachineOrbitalFollow))]
 public class ThirdPersonCamera : MonoBehaviour
 {
     [SerializeField] private PlayerSettings _playerSettings;
 
-    private CinemachineOrbitalFollow _orbitalFollow;
-
-    // マウス1ピクセルの移動に対する基準回転角度
     private const float BaseSensitivity = 0.1f;
 
+    private CinemachineOrbitalFollow _orbitalFollow;
+
     /// <summary>
-    /// カメラの回転制御コンポーネントを取得する。
+    /// カメラ操作に必要なコンポーネントを取得する。
     /// </summary>
     private void Awake()
     {
@@ -21,15 +20,24 @@ public class ThirdPersonCamera : MonoBehaviour
     }
 
     /// <summary>
-    /// マウスの移動量に応じてカメラを回転させる。
+    /// マウスによるカメラ回転とズームを処理する。
     /// </summary>
     private void Update()
     {
-        if (Mouse.current == null)
+        if (Mouse.current == null || _playerSettings == null)
         {
             return;
         }
 
+        RotateCamera();
+        ZoomCamera();
+    }
+
+    /// <summary>
+    /// マウスの移動量に応じてカメラを回転させる。
+    /// </summary>
+    private void RotateCamera()
+    {
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
         float sensitivity =
@@ -44,5 +52,22 @@ public class ThirdPersonCamera : MonoBehaviour
             _orbitalFollow.VerticalAxis.ClampValue(
                 _orbitalFollow.VerticalAxis.Value -
                 mouseDelta.y * sensitivity);
+    }
+
+    /// <summary>
+    /// マウスホイールの入力に応じてカメラの距離を変更する。
+    /// </summary>
+    private void ZoomCamera()
+    {
+        float scroll = Mouse.current.scroll.ReadValue().y;
+
+        float cameraDistance =
+            _orbitalFollow.Radius -
+            scroll * _playerSettings.ZoomSpeed;
+
+        _orbitalFollow.Radius = Mathf.Clamp(
+            cameraDistance,
+            _playerSettings.MinCameraDistance,
+            _playerSettings.MaxCameraDistance);
     }
 }
