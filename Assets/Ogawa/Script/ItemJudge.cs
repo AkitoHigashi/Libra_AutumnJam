@@ -53,18 +53,18 @@ public class ItemJudge : MonoBehaviour
         // 判定結果に応じてイベントを呼び出す
         _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
 
-        // 掴んだアイテムの子にあるCommonItemModelを探す
-        Transform commonModel =
-            selectedItem.transform.Find("CommonItemModel");
-
-        // CommonItemModelが見つかった場合は削除する
-        if (commonModel != null)
+        // ステージ上に生成されたアイテムをすべて削除する
+        foreach (ItemData item in _itemSpawner.SpawnedItems)
         {
-            Destroy(commonModel.gameObject);
+            if (item != null)
+            {
+                // アイテム本体と子オブジェクトのCommonItemModelを削除する
+                Destroy(item.gameObject);
+            }
         }
 
-        // 一定時間後にアイテムを削除して次のお題を選ぶ処理を開始する
-        StartCoroutine(RemoveItemAndSelectNext(selectedItem));
+        // 生成済みアイテムの管理リストを空にする
+        _itemSpawner.SpawnedItems.Clear();
     }
 
     // アイテムの削除と次のお題の抽選を行うコルーチン
