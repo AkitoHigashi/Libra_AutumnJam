@@ -21,10 +21,9 @@ public class InGameState : MonoBehaviour
         _itemJudge = _itemManager.GetComponent<ItemJudge>();
         _spawner = _itemManager.GetComponent<ItemSpawner>();
         _scoreCalculator = _itemManager.GetComponent<ScoreCalculator>();
-}
+    }
     private void Update()//各ゲームステートでそれぞれの処理を行う
     {
-        _targetItemSelector.SelectTargetItem();
         if (nowAction) return;
         nowAction = true;
         switch (InGameData.gameState)
@@ -71,13 +70,14 @@ public class InGameState : MonoBehaviour
                 }));
                 break;
         }
-        _spawner.SpawnItems();
     }
     IEnumerator StartCountDown(Action onComplete)
     {
         _gameData.isTake = false;
         // ゲーム開始時にアイテムを生成する
         _spawner.SpawnItems();
+        //ゲーム開始時にターゲットを決定
+        _targetItemSelector.SelectTargetItem();
         //カウントダウンの処理
         yield return new WaitForSeconds(1f);
 
@@ -99,6 +99,7 @@ public class InGameState : MonoBehaviour
     IEnumerator lottery(Action onComplete)
     {
         //選ばれたアイテムを表示する処理
+
         yield return new WaitForSeconds(1f);
         onComplete?.Invoke();
     }

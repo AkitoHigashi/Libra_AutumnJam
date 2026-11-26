@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    //プレイヤーネームとスコアを保存するList
     public static new List<ScoreAndName> scoreAndPlayerNameList = new();
 }
 
