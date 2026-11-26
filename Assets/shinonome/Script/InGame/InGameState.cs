@@ -33,21 +33,11 @@ public class InGameState : MonoBehaviour
         _scoreCalculator = _itemManager.GetComponent<ScoreCalculator>();
     }
 
-    // Unity Editorでインゲームシーンを直接再生する場合は従来通り開始する。
-    private void Start()
-    {
-        if (!SceneManagement.IsTransitioning)
-            InGameData.gameState = GameState.CountDown;
-    }
-
     /// <summary>
     /// 現在のゲームステートを監視し、未実行のステートであれば対応するコルーチンを開始する
     /// </summary>
     private void Update()
     {
-        // ロード画面・暗転解除中はステート処理を開始しない。
-        if (SceneManagement.IsTransitioning || InGameData.gameState == GameState.None) return;
-
         // すでに現在のステートのコルーチンが進行中なら何もしない
         if (nowAction) return;
         nowAction = true;
