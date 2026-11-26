@@ -9,10 +9,15 @@ public class PlayerSettings : MonoBehaviour
 
     [Header("カメラ設定")]
     [SerializeField, Min(0f)]
-    private float _cameraSensitivity;
+    private float _cameraSensitivity = 1f;
+
+    [Header("アイテム取得設定")]
+    [SerializeField, Min(0f)]
+    private float _pickupRadius = 2f;
 
     public float WalkSpeed => _walkSpeed;
     public float RunSpeed => _runSpeed;
     public float RotationSpeed => _rotationSpeed;
     public float CameraSensitivity => _cameraSensitivity;
+    public float PickupRadius => _pickupRadius;
 }
