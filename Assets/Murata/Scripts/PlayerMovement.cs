@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (!_canMove || SceneManagement.IsTransitioning)
+        if (!_canMove)
         {
             StopMovement();
             return;
