@@ -1,95 +1,134 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class InGameState : MonoBehaviour
 {
     GameObject _mainGameManager;
+    GameObject _itemManager;
     InGameData _gameData;
     ScoreCalculator _scoreCalculator;
+    TargetItemSelector _targetItemSelector;
+    ItemJudge _itemJudge;
+    ItemSpawner _spawner;
     bool nowAction = false;
-    float _nowTime;
     private void OnEnable()
     {
         _mainGameManager = GameObject.FindWithTag("MainGameManager");
+        _itemManager = GameObject.FindWithTag("ItemManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
-        _scoreCalculator = _mainGameManager.GetComponent<ScoreCalculator>();
-    }
+        _targetItemSelector = _itemManager.GetComponent<TargetItemSelector>();
+        _itemJudge = _itemManager.GetComponent<ItemJudge>();
+        _spawner = _itemManager.GetComponent<ItemSpawner>();
+        _scoreCalculator = _itemManager.GetComponent<ScoreCalculator>();
+}
     private void Update()//各ゲームステートでそれぞれの処理を行う
     {
+        _targetItemSelector.SelectTargetItem();
         if (nowAction) return;
         nowAction = true;
         switch (InGameData.gameState)
         {
             case GameState.CountDown:
                 {
-                    StartCountDown(() =>
+                    StartCoroutine(StartCountDown(() =>
                     {
                         InGameData.gameState = GameState.Walk;
                         nowAction = false;
-                    });
+                    }));
                 }
                 break;
 
             case GameState.Walk:
-                WarkTime(() => 
+                StartCoroutine(WarkTime(() =>
                 {
                     InGameData.gameState = GameState.lottery;
                     nowAction = false;
-                });
+                }));
                 break;
 
             case GameState.lottery:
-                lottery(() =>
+                StartCoroutine(lottery(() =>
                 {
-                    InGameData.gameState = GameState.lottery;
+                    InGameData.gameState = GameState.Search;
                     nowAction = false;
-                });
+                }));
                 break;
 
             case GameState.Search:
-                SearchTime(() =>
+                StartCoroutine(SearchTime(() =>
                 {
                     InGameData.gameState = GameState.Instructions;
                     nowAction = false;
-                });
+                }));
                 break;
 
             case GameState.Instructions:
-                Instruction(() =>
+                StartCoroutine(Judge(() =>
                 {
                     InGameData.gameState = GameState.CountDown;
                     nowAction = false;
-                });
+                }));
                 break;
         }
+        _spawner.SpawnItems();
     }
-    void StartCountDown(Action onComplete)
+    IEnumerator StartCountDown(Action onComplete)
     {
+        _gameData.isTake = false;
+        // ゲーム開始時にアイテムを生成する
+        _spawner.SpawnItems();
+        //カウントダウンの処理
+        yield return new WaitForSeconds(1f);
 
-    }
-
-    void WarkTime(Action onComplete)
-    {
-
-    }
-
-    void lottery(Action onComplete)
-    {
-
+        onComplete?.Invoke();
     }
 
-    void SearchTime(Action onComplete)
+    IEnumerator WarkTime(Action onComplete)
     {
-        while(_gameData.SearchTime > _gameData.nowSearchTime)
+        //一定時間たつまで歩けるようにする
+        _gameData.nowSearchTime = 0;
+        while(_gameData.WalkTime > _gameData.nowSearchTime)
         {
             _gameData.nowSearchTime += Time.deltaTime;
+            yield return null;
         }
+        onComplete?.Invoke();
     }
 
-    void Instruction(Action onComplete)
+    IEnumerator lottery(Action onComplete)
     {
-        bool isClear = true;
-        _scoreCalculator.CalculateScore(isClear, _gameData.picUpItem,)
+        //選ばれたアイテムを表示する処理
+        yield return new WaitForSeconds(1f);
+        onComplete?.Invoke();
+    }
+
+    IEnumerator SearchTime(Action onComplete)
+    { 
+        //アイテムを選択するか時間がたつまで待つ
+        _gameData.nowSearchTime = 0;
+        while(_gameData.SearchTime > _gameData.nowSearchTime && !_gameData.isTake)
+        {
+            _gameData.nowSearchTime += Time.deltaTime;
+            yield return null;
+        }
+        onComplete?.Invoke();
+    }
+
+    IEnumerator Judge(Action onComplete)
+    {
+        //判定後アイテムを全削除する
+        if (!_gameData.isTake)
+        {
+            _scoreCalculator.CalculateScore(false, _gameData.picUpItem, _gameData.nowSearchTime);
+            //アイテムの全削除
+
+            yield return new WaitForSeconds(1f);
+        }
+        if (_gameData.isTake)
+        {
+            _itemJudge.JudgeItem();
+        }
+        onComplete?.Invoke();
     }
 }

@@ -64,6 +64,8 @@ public class PlayerGrabber : MonoBehaviour
 
         _inGameData.playerTakeItem = itemData;
 
+        _inGameData.isTake = true;
+
         nearestItem.PickUp();
 
         _pickedUpItems.Add(nearestItem);
@@ -110,6 +112,8 @@ public class PlayerGrabber : MonoBehaviour
         {
             _inGameData.playerTakeItem = default;
         }
+
+        _inGameData.isTake = false;
     }
 
     /// <summary>
