@@ -71,7 +71,11 @@ public class InGameState : MonoBehaviour
 
     void WarkTime(Action onComplete)
     {
+        _gameData.nowSearchTime = 0;
+        while(_gameData.WalkTime > _gameData.nowSearchTime)
+        {
 
+        }
     }
 
     void lottery(Action onComplete)
@@ -81,7 +85,8 @@ public class InGameState : MonoBehaviour
 
     void SearchTime(Action onComplete)
     {
-        while(_gameData.SearchTime > _gameData.nowSearchTime)
+        _gameData.nowSearchTime = 0;
+        while(_gameData.SearchTime > _gameData.nowSearchTime || _gameData.isTake)
         {
             _gameData.nowSearchTime += Time.deltaTime;
         }
