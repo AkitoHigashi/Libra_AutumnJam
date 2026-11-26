@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InGameData : MonoBehaviour
+public  class InGameData : MonoBehaviour
 {
     public static GameState gameState = GameState.None;//InGameState
     public int life = 3;//間違えられる回数
@@ -20,6 +20,7 @@ public class InGameData : MonoBehaviour
     public float SearchTime = 10;//探せる時間
     public float nowSearchTime;//残りの探せる時間
     public int trueIntsum;//正解の合計回数
+    public bool isTake;//アイテムを持っているかどうか
 }
 
 public enum GameState
