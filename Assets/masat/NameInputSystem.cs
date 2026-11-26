@@ -5,7 +5,8 @@ public class NameInputSystem : MonoBehaviour
 {
 
     [SerializeField]InputField _nameInputField;
-    [SerializeField] Text _displayNameText; 
+    [SerializeField] Text _displayNameText;
+    [SerializeField] Text _errorText;
 
     
     void Start()
@@ -15,9 +16,9 @@ public class NameInputSystem : MonoBehaviour
     public void OnConfirmName()
     {
         string playerName = _nameInputField.text.Trim();
-        if(playerName.Length == 0 )
+        if(string.IsNullOrEmpty(playerName))
         {
-            _displayNameText.text = "名前を入力してください";
+            _errorText.text = "名前を入力してください";
             return;
         }
         
