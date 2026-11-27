@@ -106,8 +106,18 @@ public class ItemSpawner : MonoBehaviour
     }
 
     // 生成済みアイテムを管理リストから取り除く
-    public void RemoveSpawnedItem(ItemData item)
+    public void RemoveAllSpawnedItems()
     {
-        SpawnedItems.Remove(item);
+        foreach (ItemData item in SpawnedItems)
+        {
+            if (item != null)
+            {
+                // アイテム本体とCommonItemModelを削除する
+                Destroy(item.gameObject);
+            }
+        }
+
+        // 生成済みアイテムの管理リストを空にする
+        SpawnedItems.Clear();
     }
 }
