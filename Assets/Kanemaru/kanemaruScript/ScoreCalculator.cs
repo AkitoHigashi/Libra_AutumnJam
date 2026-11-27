@@ -17,7 +17,7 @@ public class ScoreCalculator : MonoBehaviour
 
     private void Start()
     {
-        _mainGameManager = GameObject.FindWithTag("MainGameManager");
+        _mainGameManager = GameObject.FindWithTag("InGameManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
         UpdateScoreUI();
     }
@@ -33,37 +33,37 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     // 正誤判定を受け取って得点を計算
-    // TODO: 正誤判定の参照先を設定する（ItemPickupなど）
     // TODO: ItemData完成後、引数とデータ構造を確認する
-    public void CalculateScore(bool isCorrect, ItemData itemData, float remainingTime)
+    public void CalculateScore(
+     bool isCorrect,
+     ItemData itemData,
+     float remainingTime)
     {
-        if (isCorrect)
+        if (_gameData == null || itemData == null)
         {
-            // アイテムの基本得点
-            // TODO: アイテム追加得点の参照先を確認する
-            int totalPoint = _baseScore + itemData.item.point;
+            Debug.LogError("必要なデータが設定されていません");
+            return;
+        }
 
-            _totalPoint += totalPoint;
+        // お題のアイテムとプレイヤーが掴んだアイテムを比較
+        bool correct = itemData == _gameData.playerTakeItem;
 
-            Debug.Log("正解！ +" + totalPoint + "点");
+        if (correct)
+        {
+            // 正解時の基本得点
+            _totalPoint = _baseScore + itemData.item.point;
 
-            // 正解アイテム取得時のみ時間ボーナスを追加
-            AddTimeBonus(remainingTime,totalPoint);
+            // 時間ボーナス
+            AddTimeBonus(remainingTime, _totalPoint);
+
+            Debug.Log("正解！");
         }
         else
         {
+            // 不正解時の減点とライフ減少
             Penalty();
-            Debug.Log("不正解！ -" + _penaltyScore + "点");
-            // ライフを1減らす
-            _gameData.life--;
 
-            // ライフが0未満にならないようにする
-            if (_gameData.life < 0)
-            {
-                _gameData.life = 0;
-            }
-
-            Debug.Log("ライフ残り：" + _gameData.life);
+            Debug.Log("不正解！");
         }
 
         UpdateScoreUI();
