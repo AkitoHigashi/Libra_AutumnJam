@@ -43,7 +43,7 @@ public class ScoreCalculator : MonoBehaviour
             Debug.Log("不正解！ -" + _penaltyScore + "点");
         }
 
-        UpdateScoreUI();
+        //UpdateScoreUI();
     }
 
     // 残り時間によるボーナス
