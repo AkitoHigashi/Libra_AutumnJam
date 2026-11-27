@@ -24,13 +24,17 @@ public class ScoreCalculator : MonoBehaviour
     }
     // ターン開始時にスコアをリセット
     //ターンの管理をするスクリプトで
-    public void ResetScore()
+    public void FinishSet()
     {
+        _gameData.sumPoint += _totalPoint;
+
+        Debug.Log("今回のセットの得点：" + _totalPoint);
+        Debug.Log("ゲーム全体の合計得点：" + _gameData.sumPoint);
+
+        // 次のセットに向けてリセット
         _totalPoint = 0;
 
         UpdateScoreUI();
-
-        Debug.Log("スコアをリセットしました");
     }
 
     // 正誤判定を受け取って得点を計算
