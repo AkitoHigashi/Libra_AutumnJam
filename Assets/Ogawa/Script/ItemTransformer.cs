@@ -7,7 +7,6 @@ public class ItemTransformer : MonoBehaviour
     // Inspectorから設定する、共通の見た目のモデル
     [SerializeField] private GameObject _commonItemModel;
 
-    // 複数のアイテムの見た目を変えるメソッド
     public void TransformItems(List<ItemData> itemDataList)
     {
         // 共通モデルが設定されていない場合は処理を終了する
