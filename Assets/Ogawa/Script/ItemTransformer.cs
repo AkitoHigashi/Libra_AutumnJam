@@ -1,43 +1,49 @@
 
 using UnityEngine;
-using System.Collections.Generic;
 
 public class ItemTransformer : MonoBehaviour
 {
-    // Inspectorから設定する、共通の見た目のモデル
+    // Inspectorから設定する共通モデル
     [SerializeField] private GameObject _commonItemModel;
 
-    public void TransformItems
-        (List<ItemData> itemDataList)
+    // シーン内のすべてのItemDataを変換する
+    public void TransformItems()
     {
-        // 共通モデルが設定されていない場合は処理を終了
-        if (_commonItemModel == null || itemDataList == null)
+        if (_commonItemModel == null)
         {
+            Debug.LogWarning("共通モデルが設定されていません");
             return;
         }
+
+        // シーン内のItemDataを取得
+        ItemData[] itemDataList =
+            FindObjectsByType<ItemData>(FindObjectsSortMode.None);
+
+        // 取得したアイテムを1つずつ変換
         foreach (ItemData itemData in itemDataList)
         {
-            // アイテムがnullの場合はスキップする
             if (itemData == null)
             {
                 continue;
             }
 
-            // 共通モデルを生成する
+            // すでに変換済みなら都バス
+            if (itemData.transform.Find(_commonItemModel.name) != null)
+            {
+                continue;
+            }
+
+            // 共通モデルを生成
             GameObject commonModel = Instantiate(
                 _commonItemModel,
-                itemData.transform.position,
-                itemData.transform.rotation,
                 itemData.transform
             );
 
-            // ローカル位置を原点
+            // ローカル位置と回転を初期化
             commonModel.transform.localPosition = Vector3.zero;
-
-            // ローカル回転を初期状態にする
             commonModel.transform.localRotation = Quaternion.identity;
         }
+
+        Debug.Log($"アイテム変換完了：{itemDataList.Length}個");
     }
 }
-
-
