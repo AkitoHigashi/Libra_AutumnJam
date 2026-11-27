@@ -44,7 +44,7 @@ public class ItemTransformer : MonoBehaviour
                 // 元の表示状態を保存
                 _rendererStates[renderer] = renderer.enabled;
 
-                // 元のメッシュを非表示にする
+                // 元のメッシュを非表示
                 renderer.enabled = false;
             }
 
@@ -61,7 +61,7 @@ public class ItemTransformer : MonoBehaviour
         Debug.Log($"アイテム変換完了：{itemDataList.Length}個");
     }
 
-    // 正誤判定時に元のメッシュを表示する
+    // 正誤判定時に元のメッシュを表示
     public void RestoreItemMesh(ItemData itemData)
     {
         if (itemData == null ||
