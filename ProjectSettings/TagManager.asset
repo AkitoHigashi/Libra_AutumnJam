@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - InGameManager
+  - ItemManager
+  - MainGameManager
+  - Stage
   layers:
   - Default
   - TransparentFX

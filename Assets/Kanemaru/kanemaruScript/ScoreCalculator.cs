@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class ScoreCalculator : MonoBehaviour
 {
-    GameObject _mainGameManager;
+    GameObject _inGameManager;
     InGameData _gameData;
     [Header("Score")]
     [SerializeField] private int _score = 0;
+    [SerializeField] private int _totalPoint = 0;
     [SerializeField] private int _baseScore = 10;
     [SerializeField] private int _penaltyScore = 20;
     [SerializeField] private TMP_Text _scoreText;
@@ -16,9 +17,19 @@ public class ScoreCalculator : MonoBehaviour
 
     private void Start()
     {
-        _mainGameManager = GameObject.FindWithTag("MainGameManager");
-        _gameData = _mainGameManager.GetComponent<InGameData>();
+        _inGameManager = GameObject.FindWithTag("InGameManager");
+        _gameData = _inGameManager.GetComponent<InGameData>();
+        //UpdateScoreUI();
+    }
+    // ターン開始時にスコアをリセット
+    //ターンの管理をするスクリプトで
+    public void ResetScore()
+    {
+        _totalPoint = 0;
+
         UpdateScoreUI();
+
+        Debug.Log("スコアをリセットしました");
     }
 
     // 正誤判定を受け取って得点を計算
@@ -32,6 +43,8 @@ public class ScoreCalculator : MonoBehaviour
             // TODO: アイテム追加得点の参照先を確認する
             int totalPoint = _baseScore + itemData.item.point;
 
+            _totalPoint += totalPoint;
+
             Debug.Log("正解！ +" + totalPoint + "点");
 
             // 正解アイテム取得時のみ時間ボーナスを追加
@@ -41,9 +54,19 @@ public class ScoreCalculator : MonoBehaviour
         {
             Penalty();
             Debug.Log("不正解！ -" + _penaltyScore + "点");
+            // ライフを1減らす
+            _gameData.life--;
+
+            // ライフが0未満にならないようにする
+            if (_gameData.life < 0)
+            {
+                _gameData.life = 0;
+            }
+
+            Debug.Log("ライフ残り：" + _gameData.life);
         }
 
-        UpdateScoreUI();
+        //UpdateScoreUI();
     }
 
     // 残り時間によるボーナス
@@ -52,6 +75,7 @@ public class ScoreCalculator : MonoBehaviour
         int bonus = Mathf.FloorToInt(remainingTime) * _timeBonus;
 
         _gameData.sumPoint +=(totalPoint + bonus);
+        _totalPoint += bonus;
 
         Debug.Log("時間ボーナス：+" + bonus + "点");
     }
@@ -59,7 +83,7 @@ public class ScoreCalculator : MonoBehaviour
     // 得点表示
     private void UpdateScoreUI()
     {
-        _scoreText.text = "Score: " + _score;
+        _scoreText.text = "Score: " + _totalPoint;
     }
 
     private void Penalty()
@@ -68,7 +92,7 @@ public class ScoreCalculator : MonoBehaviour
 
         if (_gameData.sumPoint < 0)
         {
-            _score = 0;
+            _totalPoint = 0;
         }
     }
 }
