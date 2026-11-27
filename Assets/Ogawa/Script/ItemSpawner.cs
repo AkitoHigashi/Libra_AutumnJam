@@ -90,7 +90,7 @@ public class ItemSpawner : MonoBehaviour
             // 選ばれた番号のアイテムを取得する
             ItemData selectedItem = availableItems[randomIndex];
 
-            // 選ばれたアイテムを使用済みとして記録する
+            // 選ばれたアイテムを使用済みとして記録するよん
             usedItems.Add(selectedItem);
 
             // 選ばれたアイテムを配置場所に生成するよ

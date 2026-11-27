@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb478358d94ca1949a017c1179108da9, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6141678462891032911}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb478358d94ca1949a017c1179108da9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8365763973853906162}
   m_SourcePrefab: {fileID: 100100000, guid: fb478358d94ca1949a017c1179108da9, type: 3}
 --- !u!1 &8785981938662236877 stripped
 GameObject:
@@ -89,9 +92,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc3882c81fc7e144aeb2484e1fa8bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cover: {fileID: 0}
+  cover: {fileID: 7453590312609794556, guid: 17f2a892b74e32d48aaa5bc9491f1bdd, type: 3}
   item:
-    itemOBJ: {fileID: 0}
-    <point>k__BackingField: 0
-    name: 
+    itemOBJ: {fileID: 8785981938662236877}
+    <point>k__BackingField: 1000
+    name: caaan
     itemImage: {fileID: 0}
+--- !u!114 &8365763973853906162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8785981938662236877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d852e923f102e4ea69b348253e9cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemData: {fileID: -6141678462891032911}

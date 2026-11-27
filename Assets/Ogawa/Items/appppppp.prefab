@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dcad7102f0b673c4aaecd7b7768c99b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7186429775569519002}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dcad7102f0b673c4aaecd7b7768c99b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -9116284838920523570}
   m_SourcePrefab: {fileID: 100100000, guid: dcad7102f0b673c4aaecd7b7768c99b7, type: 3}
 --- !u!1 &8467842402448085937 stripped
 GameObject:
@@ -95,3 +98,16 @@ MonoBehaviour:
     <point>k__BackingField: 1000
     name: Apple
     itemImage: {fileID: 0}
+--- !u!114 &-9116284838920523570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467842402448085937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d852e923f102e4ea69b348253e9cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemData: {fileID: -7186429775569519002}
