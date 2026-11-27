@@ -14,9 +14,9 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲーム開始前のプレイヤーの移動を禁止する。
+    /// 初期化完了後にプレイヤーの移動状態を設定する。
     /// </summary>
-    private void OnEnable()
+    private void Start()
     {
         UpdateMovementState();
     }
