@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: cancan
       objectReference: {fileID: 0}
+    - target: {fileID: 561208723412902292, guid: 70f073a3085a24d42b6a567ae48f7b6b, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211013460953747108, guid: 70f073a3085a24d42b6a567ae48f7b6b, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211013460953747108, guid: 70f073a3085a24d42b6a567ae48f7b6b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
