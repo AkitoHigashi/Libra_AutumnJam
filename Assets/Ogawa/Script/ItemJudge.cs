@@ -53,6 +53,7 @@ public class ItemJudge : MonoBehaviour
         // 判定結果に応じてイベントを呼び出す
         _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
 
+<<<<<<< HEAD
         // 掴んだアイテムの子にあるCommonItemModelを探す
         Transform commonModel =
             selectedItem.transform.Find("CommonItemModel");
@@ -90,5 +91,7 @@ public class ItemJudge : MonoBehaviour
 
         // 判定処理中の状態を解除する
         _isJudging = false;
+=======
+>>>>>>> 6f628dc196cb6d25a7a75c75efdd7f041745aa83
     }
 }
