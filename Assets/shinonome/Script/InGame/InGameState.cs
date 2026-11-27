@@ -50,6 +50,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Walk;
                     nowAction = false;
+                    Debug.Log("endCountDown");
                 }));
                 break;
 
@@ -59,6 +60,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.lottery;
                     nowAction = false;
+                    Debug.Log("EndWarkTime");
                 }));
                 break;
 
@@ -68,6 +70,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Search;
                     nowAction = false;
+                    Debug.Log("Endlottery");
                 }));
                 break;
 
@@ -77,6 +80,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Instructions;
                     nowAction = false;
+                    Debug.Log("EndSearch");
                 }));
                 break;
 
@@ -88,6 +92,7 @@ public class InGameState : MonoBehaviour
                     if (_gameData.life <= 0) InGameData.gameState = GameState.StartResult;
                     else InGameData.gameState = GameState.CountDown;
                     nowAction = false;
+                    Debug.Log("EndJuge");
                 }));
                 break;
 
@@ -96,6 +101,7 @@ public class InGameState : MonoBehaviour
                 StartCoroutine(StartResult(() =>
                 {
                     // リザルトシーンへの遷移処理などを記述
+                    Debug.Log("StartResult");
                 }));
                 break;
         }
