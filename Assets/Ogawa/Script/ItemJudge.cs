@@ -53,7 +53,7 @@ public class ItemJudge : MonoBehaviour
         // 判定中に同じ処理が重複して実行されないようにする
         _isJudging = true;
 
-        // 正誤判定時に元のメッシュを表示する
+        // 正誤判定時に元のメッシュを表示
         if (_itemTransformer != null)
         {
             _itemTransformer.RestoreItemMesh(selectedItem);

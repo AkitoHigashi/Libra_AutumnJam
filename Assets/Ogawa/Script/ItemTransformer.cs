@@ -61,7 +61,7 @@ public class ItemTransformer : MonoBehaviour
         Debug.Log($"アイテム変換完了：{itemDataList.Length}個");
     }
 
-    // 正誤判定時に元のメッシュを表示する
+    // 正誤判定時に元のメッシュを表示
     public void RestoreItemMesh(ItemData itemData)
     {
         if (itemData == null ||
