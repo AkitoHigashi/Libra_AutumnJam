@@ -10013,9 +10013,11 @@ MonoBehaviour:
   area1Item:
   - {fileID: -7186429775569519002, guid: e9a240893a828014e918ccd492726732, type: 3}
   - {fileID: 827095798186321337, guid: 9b44ec82916cbb14898323e04add502c, type: 3}
+  area2Item:
+  - {fileID: 7462500055182224771, guid: d441f0eb582e8f245acdae18f0b1308a, type: 3}
   - {fileID: -6141678462891032911, guid: fc6f6d41c073e724f8c2822441c9f374, type: 3}
-  area2Item: []
-  area3Item: []
+  area3Item:
+  - {fileID: 2782386131485168412, guid: 2f511fcdc74eda84486c00e4af782112, type: 3}
   playerStartPos: {fileID: 1904891781}
   playerTakeItem: {fileID: 0}
   picUpItem: {fileID: 0}
