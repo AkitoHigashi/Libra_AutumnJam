@@ -8,6 +8,7 @@ using System.Collections;
 public class InGameState : MonoBehaviour
 {
     GameObject _mainGameManager;
+    GameObject _inGameManager;
     GameObject _itemManager;
     InGameData _gameData;
     ScoreCalculator _scoreCalculator;
@@ -23,14 +24,14 @@ public class InGameState : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        _mainGameManager = GameObject.FindWithTag("InGameManager");
+        _inGameManager = GameObject.FindWithTag("InGameManager");
         _itemManager = GameObject.FindWithTag("ItemManager");
-
-        _gameData = _mainGameManager.GetComponent<InGameData>();
+        _mainGameManager = GameObject.FindWithTag("MainGameManager");
+        _gameData = _inGameManager.GetComponent<InGameData>();
         _targetItemSelector = _itemManager.GetComponent<TargetItemSelector>();
         _itemJudge = _itemManager.GetComponent<ItemJudge>();
         _spawner = _itemManager.GetComponent<ItemSpawner>();
-        _scoreCalculator = _itemManager.GetComponent<ScoreCalculator>();
+        _scoreCalculator = _mainGameManager.GetComponent<ScoreCalculator>();
     }
 
     /// <summary>
@@ -50,6 +51,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Walk;
                     nowAction = false;
+                    Debug.Log("endCountDown");
                 }));
                 break;
 
@@ -59,6 +61,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.lottery;
                     nowAction = false;
+                    Debug.Log("EndWarkTime");
                 }));
                 break;
 
@@ -68,6 +71,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Search;
                     nowAction = false;
+                    Debug.Log("Endlottery");
                 }));
                 break;
 
@@ -77,6 +81,7 @@ public class InGameState : MonoBehaviour
                 {
                     InGameData.gameState = GameState.Instructions;
                     nowAction = false;
+                    Debug.Log("EndSearch");
                 }));
                 break;
 
@@ -88,6 +93,7 @@ public class InGameState : MonoBehaviour
                     if (_gameData.life <= 0) InGameData.gameState = GameState.StartResult;
                     else InGameData.gameState = GameState.CountDown;
                     nowAction = false;
+                    Debug.Log("EndJuge");
                 }));
                 break;
 
@@ -96,6 +102,7 @@ public class InGameState : MonoBehaviour
                 StartCoroutine(StartResult(() =>
                 {
                     // リザルトシーンへの遷移処理などを記述
+                    Debug.Log("StartResult");
                 }));
                 break;
         }
@@ -116,6 +123,7 @@ public class InGameState : MonoBehaviour
 
         // 今回プレイヤーが探すべきお題アイテムを決定する
         _targetItemSelector.SelectTargetItem();
+        Debug.Log(_gameData.picUpItem.name);
 
         // カウントダウン演出の待機
         yield return new WaitForSeconds(1f);
@@ -185,6 +193,8 @@ public class InGameState : MonoBehaviour
         if (!_gameData.isTake)
         {
             // 時間切れでアイテムをつかめなかった場合：不正解扱いとしてお題アイテムのポイント分を減点する
+            Debug.Log("scoreCalculator: " + _scoreCalculator);
+            Debug.Log("gameData: " + _gameData);
             _scoreCalculator.CalculateScore(false, _gameData.picUpItem, _gameData.nowSearchTime);
             // フィールド上のアイテムを全削除する処理
         }
