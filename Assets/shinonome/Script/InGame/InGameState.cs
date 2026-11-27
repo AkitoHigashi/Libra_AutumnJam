@@ -122,6 +122,7 @@ public class InGameState : MonoBehaviour
 
         // 今回プレイヤーが探すべきお題アイテムを決定する
         _targetItemSelector.SelectTargetItem();
+        Debug.Log(_gameData.picUpItem.name);
 
         // カウントダウン演出の待機
         yield return new WaitForSeconds(1f);
