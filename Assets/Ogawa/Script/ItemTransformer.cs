@@ -31,7 +31,7 @@ public class ItemTransformer : MonoBehaviour
                 itemData.transform
             );
 
-            // ローカル位置を原点にする
+            // ローカル位置を原点
             commonModel.transform.localPosition = Vector3.zero;
 
             // ローカル回転を初期状態にする
