@@ -44,7 +44,7 @@ public class ItemTransformer : MonoBehaviour
                 // 元の表示状態を保存
                 _rendererStates[renderer] = renderer.enabled;
 
-                // 元のメッシュを非表示にする
+                // 元のメッシュを非表示
                 renderer.enabled = false;
             }
 

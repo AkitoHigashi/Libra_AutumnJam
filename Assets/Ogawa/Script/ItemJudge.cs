@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -45,10 +44,10 @@ public class ItemJudge : MonoBehaviour
             return;
         }
 
-        // プレイヤーが掴んだアイテムを取得する
+        // プレイヤーが掴んだアイテムを取得
         ItemData selectedItem = _inGameData.playerTakeItem;
 
-        // 掴んだアイテムとお題のアイテムが同じか比較する
+        // 掴んだアイテムとお題のアイテムが同じか比較
         bool isCorrect = selectedItem == _inGameData.picUpItem;
 
         // 判定中に同じ処理が重複して実行されないようにする
