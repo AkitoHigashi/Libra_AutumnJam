@@ -19,11 +19,7 @@ public class UIAnimation : MonoBehaviour
     [SerializeField] Vector3 _targetRotate = new Vector3();
     [SerializeField] float _rotateDuration = 0.5f;
     
-    void Start()
-    {
-        PlayAnim();
-        
-    }
+    
     public void PlayAnim()
     {
         
