@@ -3435,7 +3435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438219059}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ===Wall===
   m_TagString: Stage
   m_Icon: {fileID: 0}
@@ -4546,7 +4546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 626413639}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ===floor===
   m_TagString: Stage
   m_Icon: {fileID: 0}
@@ -8042,15 +8042,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.036907837
+      value: 0.036907814
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0073011005
+      value: 0.0072982763
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00026965875
+      value: -0.00026955426
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -14488,15 +14488,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 827731406015819487, guid: 4a77cf902c7cd0944aeb459fabaf4a59, type: 3}
       propertyPath: _zoomSpeed
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 827731406015819487, guid: 4a77cf902c7cd0944aeb459fabaf4a59, type: 3}
       propertyPath: _maxCameraDistance
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 827731406015819487, guid: 4a77cf902c7cd0944aeb459fabaf4a59, type: 3}
       propertyPath: _minCameraDistance
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1962866396833169725, guid: 4a77cf902c7cd0944aeb459fabaf4a59, type: 3}
       propertyPath: m_LocalPosition.x
