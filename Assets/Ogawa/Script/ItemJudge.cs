@@ -53,42 +53,5 @@ public class ItemJudge : MonoBehaviour
         // 判定結果に応じてイベントを呼び出す
         _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
 
-        // ステージ上に生成されたアイテムをすべて削除する
-        foreach (ItemData item in _itemSpawner.SpawnedItems)
-        {
-            if (item != null)
-            {
-                // アイテム本体と子オブジェクトのCommonItemModelを削除する
-                Destroy(item.gameObject);
-            }
-        }
-
-        // 生成済みアイテムの管理リストを空にする
-        _itemSpawner.SpawnedItems.Clear();
-    }
-
-    // アイテムの削除と次のお題の抽選を行うコルーチン
-    private IEnumerator RemoveItemAndSelectNext(ItemData selectedItem)
-    {
-        // 削除するアイテムをお題の抽選対象から外す
-        _itemSpawner.RemoveSpawnedItem(selectedItem);
-
-        // Inspectorで設定した秒数だけ待つ
-        yield return new WaitForSeconds(_itemDestroyDelay);
-
-        // 対象のアイテムが存在している場合は削除する
-        if (selectedItem != null)
-        {
-            Destroy(selectedItem.gameObject);
-        }
-
-        // プレイヤーが掴んだアイテムの情報をリセットする
-        _inGameData.playerTakeItem = null;
-
-        // ステージに残っているアイテムから次のお題を抽選する
-        _targetItemSelector.SelectTargetItem();
-
-        // 判定処理中の状態を解除する
-        _isJudging = false;
     }
 }
