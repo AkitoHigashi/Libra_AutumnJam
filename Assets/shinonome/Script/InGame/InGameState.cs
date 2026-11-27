@@ -148,7 +148,7 @@ public class InGameState : MonoBehaviour
             _gameData.nowSearchTime += Time.deltaTime;
             yield return null;
         }
-        _itemTransformer.TransformItems();
+        //_itemTransformer.TransformItems(_gameData.);
         onComplete?.Invoke();
     }
 
