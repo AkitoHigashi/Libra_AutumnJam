@@ -51,7 +51,7 @@ public class ItemJudge : MonoBehaviour
         _isJudging = true;
 
         // 判定結果に応じてイベントを呼び出す
-        _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
+        _scoreCalculator.CalculateScore(isCorrect, _inGameData.picUpItem, _inGameData.nowSearchTime);
 
     }
 }

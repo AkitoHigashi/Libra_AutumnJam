@@ -9,11 +9,12 @@ public class ScoreCalculator : MonoBehaviour
     [SerializeField] private int _score = 0;
     [SerializeField] private int _totalPoint = 0;
     [SerializeField] private int _baseScore = 10;
+    [SerializeField] private int _timeBonus = 5;
     [SerializeField] private int _penaltyScore = 20;
     [SerializeField] private TMP_Text _scoreText;
 
-    [Header("Time Bonus")]
-    [SerializeField] private int _timeBonus = 10;
+    [Header("Timer")]
+    [SerializeField] private CountDownTimer _countDownTimer;
 
     private void Start()
     {
@@ -33,52 +34,66 @@ public class ScoreCalculator : MonoBehaviour
     }
 
     // 正誤判定を受け取って得点を計算
-    // TODO: 正誤判定の参照先を設定する（ItemPickupなど）
     // TODO: ItemData完成後、引数とデータ構造を確認する
-    public void CalculateScore(bool isCorrect, ItemData itemData, float remainingTime)
+    public void CalculateScore(
+          bool isCorrect,
+          ItemData itemData,
+          float remainingTime)
     {
+        if (_gameData == null || itemData == null)
+        {
+            Debug.LogError("得点計算に必要なデータがありません");
+            return;
+        }
+
         if (isCorrect)
         {
-            // アイテムの基本得点
-            // TODO: アイテム追加得点の参照先を確認する
-            int totalPoint = _baseScore + itemData.item.point;
+            // 基本得点 + アイテムの得点
+            _totalPoint = _baseScore + itemData.item.point;
 
-            _totalPoint += totalPoint;
+            // 残り時間ボーナス
+            AddTimeBonus(_totalPoint);
 
-            Debug.Log("正解！ +" + totalPoint + "点");
-
-            // 正解アイテム取得時のみ時間ボーナスを追加
-            AddTimeBonus(remainingTime,totalPoint);
+            Debug.Log("正解！");
+            Debug.Log("今回の獲得得点：" + _totalPoint);
         }
         else
         {
+            // 不正解時の減点
             Penalty();
-            Debug.Log("不正解！ -" + _penaltyScore + "点");
-            // ライフを1減らす
-            _gameData.life--;
 
-            // ライフが0未満にならないようにする
-            if (_gameData.life < 0)
-            {
-                _gameData.life = 0;
-            }
-
-            Debug.Log("ライフ残り：" + _gameData.life);
+            Debug.Log("不正解！");
         }
 
-        //UpdateScoreUI();
+        UpdateScoreUI();
     }
 
-    // 残り時間によるボーナス
-    private void AddTimeBonus(float remainingTime , int totalPoint)
+    // 残り時間ボーナス
+    private void AddTimeBonus(int totalPoint)
     {
-        int bonus = Mathf.FloorToInt(remainingTime) * _timeBonus;
+        int bonus = 0;
 
-        _gameData.sumPoint +=(totalPoint + bonus);
-        _totalPoint += bonus;
+        if (_countDownTimer != null)
+        {
+            // CountDownTimerから残り時間を取得
+            float time = _countDownTimer._remainingTime;
 
-        Debug.Log("時間ボーナス：+" + bonus + "点");
+            bonus = Mathf.FloorToInt(time) * _timeBonus;
+        }
+        else
+        {
+            Debug.LogWarning("CountDownTimerが設定されていません");
+        }
+
+        // 基本得点 + 時間ボーナス
+        _totalPoint = totalPoint + bonus;
+
+        // 累計スコアに加算
+        _gameData.sumPoint += _totalPoint;
+
+        Debug.Log("時間ボーナス：" + bonus + "点");
     }
+
 
     // 得点表示
     private void UpdateScoreUI()
