@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8995342217056685084}
   - component: {fileID: 3931044462562679210}
   - component: {fileID: 2330070223948560252}
+  - component: {fileID: 2907968308223322569}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -315,6 +316,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7405e165-2090-4109-bd00-06b2b7be4125
+    m_ActionName: 'Player/Pickup[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: 
@@ -335,6 +340,18 @@ MonoBehaviour:
   _playerSettings: {fileID: 0}
   _cameraTransform: {fileID: 0}
   _inGameData: {fileID: 0}
+--- !u!114 &2907968308223322569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3266404018567764997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3098a2052d49c8e4bbc2610f9b9bd066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6270419179892566353
 GameObject:
   m_ObjectHideFlags: 0

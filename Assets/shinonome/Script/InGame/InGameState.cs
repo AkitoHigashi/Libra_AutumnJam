@@ -15,6 +15,7 @@ public class InGameState : MonoBehaviour
     TargetItemSelector _targetItemSelector;
     ItemJudge _itemJudge;
     ItemSpawner _spawner;
+    ItemTransformer _itemTransformer;
 
     // 現在のステート処理が実行中かどうか（多重起動防止用フラグ）
     bool nowAction = false;
@@ -32,6 +33,7 @@ public class InGameState : MonoBehaviour
         _itemJudge = _itemManager.GetComponent<ItemJudge>();
         _spawner = _itemManager.GetComponent<ItemSpawner>();
         _scoreCalculator = _mainGameManager.GetComponent<ScoreCalculator>();
+        _itemTransformer = _itemManager.GetComponent<ItemTransformer>();
     }
 
     /// <summary>
@@ -146,7 +148,7 @@ public class InGameState : MonoBehaviour
             _gameData.nowSearchTime += Time.deltaTime;
             yield return null;
         }
-
+        _itemTransformer.TransformItems();
         onComplete?.Invoke();
     }
 
@@ -197,12 +199,14 @@ public class InGameState : MonoBehaviour
             Debug.Log("gameData: " + _gameData);
             _scoreCalculator.CalculateScore(false, _gameData.picUpItem, _gameData.nowSearchTime);
             // フィールド上のアイテムを全削除する処理
+            _spawner.RemoveAllSpawnedItems();
         }
         else
         {
             // アイテムを取得していた場合：お題と一致しているか判定し、正解ならスコア加算・不正解ならライフ減少を行う
             _itemJudge.JudgeItem();
             // フィールド上のアイテムを全削除する処理
+            _spawner.RemoveAllSpawnedItems();
         }
 
         // 正解発表の表示時間待機

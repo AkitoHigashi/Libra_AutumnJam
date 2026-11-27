@@ -1,33 +1,49 @@
+
 using UnityEngine;
 
 public class ItemTransformer : MonoBehaviour
 {
-    // Inspectorから設定する、共通の見た目のモデル
+    // Inspectorから設定する共通モデル
     [SerializeField] private GameObject _commonItemModel;
 
-    // 渡されたアイテムの見た目を変えるメソッド
-    public void TransformItem(ItemData itemData)
+    // シーン内のすべてのItemDataを変換する
+    public void TransformItems()
     {
-        // アイテムまたは共通モデルが設定されていない場合は処理を終了する
-        if (itemData == null || _commonItemModel == null)
+        if (_commonItemModel == null)
         {
+            Debug.LogWarning("共通モデルが設定されていません");
             return;
         }
 
-        // 共通モデルを生成する
-        // 元のアイテムと同じ位置・回転に配置し、元のアイテムの子にする
-        GameObject commonModel = Instantiate(
-            _commonItemModel,
-            itemData.transform.position,
-            itemData.transform.rotation,
-            itemData.transform
-        );
+        // シーン内のItemDataを取得
+        ItemData[] itemDataList =
+            FindObjectsByType<ItemData>(FindObjectsSortMode.None);
 
-        // 共通モデルのローカル位置を原点にする
-        commonModel.transform.localPosition = Vector3.zero;
+        // 取得したアイテムを1つずつ変換
+        foreach (ItemData itemData in itemDataList)
+        {
+            if (itemData == null)
+            {
+                continue;
+            }
 
-        // 共通モデルのローカル回転を初期状態にする
-        commonModel.transform.localRotation = Quaternion.identity;
+            // すでに変換済みなら都バス
+            if (itemData.transform.Find(_commonItemModel.name) != null)
+            {
+                continue;
+            }
+
+            // 共通モデルを生成
+            GameObject commonModel = Instantiate(
+                _commonItemModel,
+                itemData.transform
+            );
+
+            // ローカル位置と回転を初期化
+            commonModel.transform.localPosition = Vector3.zero;
+            commonModel.transform.localRotation = Quaternion.identity;
+        }
+
+        Debug.Log($"アイテム変換完了：{itemDataList.Length}個");
     }
 }
-
