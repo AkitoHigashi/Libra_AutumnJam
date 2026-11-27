@@ -9,7 +9,7 @@ public class CountDownTimer : MonoBehaviour
     /// <summary>時間を表示するテキスト</summary>
     [SerializeField] Text _timerText;
     /// <summary>残り時間</summary>
-    float _remainingTime;
+    public float _remainingTime;
     /// <summary>時間切れかどうかを判断する</summary>
     public bool _isFinished = false;
     /// <summary>練り歩きカウントダウンの初期値（20秒）</summary>
