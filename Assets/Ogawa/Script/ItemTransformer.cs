@@ -9,7 +9,7 @@ public class ItemTransformer : MonoBehaviour
 
     public void TransformItems(List<ItemData> itemDataList)
     {
-        // 共通モデルが設定されていない場合は処理を終了する
+        // 共通モデルが設定されていない場合は処理を終了
         if (_commonItemModel == null || itemDataList == null)
         {
             return;
