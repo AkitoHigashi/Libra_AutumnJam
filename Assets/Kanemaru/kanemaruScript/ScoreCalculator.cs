@@ -66,7 +66,7 @@ public class ScoreCalculator : MonoBehaviour
             Debug.Log("ライフ残り：" + _gameData.life);
         }
 
-        UpdateScoreUI();
+        //UpdateScoreUI();
     }
 
     // 残り時間によるボーナス
