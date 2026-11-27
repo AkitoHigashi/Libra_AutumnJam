@@ -4232,7 +4232,7 @@ MonoBehaviour:
   _targetItemSelector: {fileID: 522427439}
   _itemDestroyDelay: 5
   _scoreCalculator: {fileID: 734804127}
-  _itemTransformer: {fileID: 0}
+  _itemTransformer: {fileID: 522427443}
   onCorrect:
     m_PersistentCalls:
       m_Calls: []
@@ -6467,6 +6467,7 @@ MonoBehaviour:
   _isFinished: 0
   _uiAnim: {fileID: 1998433578}
   _itemPanel: {fileID: 1859991112}
+  _startAudio: {fileID: 0}
 --- !u!4 &804424133
 Transform:
   m_ObjectHideFlags: 0
@@ -7063,19 +7064,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8052672392604649286, guid: fc0431104b6ff6f4ca2ad42b83fd374f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99928
+      value: 0.99929196
       objectReference: {fileID: 0}
     - target: {fileID: 8052672392604649286, guid: fc0431104b6ff6f4ca2ad42b83fd374f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.036907386
+      value: 0.036907822
       objectReference: {fileID: 0}
     - target: {fileID: 8052672392604649286, guid: fc0431104b6ff6f4ca2ad42b83fd374f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00879187
+      value: 0.007303752
       objectReference: {fileID: 0}
     - target: {fileID: 8052672392604649286, guid: fc0431104b6ff6f4ca2ad42b83fd374f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0003247187
+      value: -0.0002697566
       objectReference: {fileID: 0}
     - target: {fileID: 8052672392604649286, guid: fc0431104b6ff6f4ca2ad42b83fd374f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8229,31 +8230,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99928
+      value: 0.999292
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.x
-<<<<<<< HEAD
-      value: 0.036907386
+      value: 0.03690826
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00879187
+      value: 0.0072983643
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0003247188
-=======
-      value: 0.036907814
-      objectReference: {fileID: 0}
-    - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.0072982763
-      objectReference: {fileID: 0}
-    - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.00026955426
->>>>>>> dfed5c2025a39784598bca1cff1d20c9e1b49dd1
+      value: -0.00026955755
       objectReference: {fileID: 0}
     - target: {fileID: 8090768170290921488, guid: d035868b9e23abb4992da605e1b26e64, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10268,6 +10257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3fba57277b897438c7ac3c4752a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _answerTime: 1
+  _startCountDownClip: {fileID: 0}
 --- !u!114 &1377153738
 MonoBehaviour:
   m_ObjectHideFlags: 0

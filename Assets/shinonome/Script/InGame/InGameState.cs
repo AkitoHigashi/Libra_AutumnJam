@@ -201,6 +201,7 @@ public class InGameState : MonoBehaviour
             Debug.Log("gameData: " + _gameData);
             _scoreCalculator.CalculateScore(false, _gameData.picUpItem, _gameData.nowSearchTime);
             //獲得したアイテムを表示時間文表示する
+            _itemTransformer.RestoreItemMesh(_gameData.playerTakeItem);
             yield return new WaitForSeconds(_answerTime);
             // フィールド上のアイテムを全削除する処理
             _spawner.RemoveAllSpawnedItems();
