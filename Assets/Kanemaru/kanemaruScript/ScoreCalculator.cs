@@ -9,17 +9,19 @@ public class ScoreCalculator : MonoBehaviour
     [SerializeField] private int _score = 0;
     [SerializeField] private int _totalPoint = 0;
     [SerializeField] private int _baseScore = 10;
+    [SerializeField] private int _timeBonus = 5;
     [SerializeField] private int _penaltyScore = 20;
     [SerializeField] private TMP_Text _scoreText;
 
-    [Header("Time Bonus")]
-    [SerializeField] private int _timeBonus = 10;
+    [Header("Timer")]
+    [SerializeField] private CountDownTimer _countDownTimer;
 
     private void Start()
     {
         _mainGameManager = GameObject.FindWithTag("InGameManager");
         _gameData = _mainGameManager.GetComponent<InGameData>();
         UpdateScoreUI();
+
     }
     // ターン開始時にスコアをリセット
     //ターンの管理をするスクリプトで
@@ -66,18 +68,26 @@ public class ScoreCalculator : MonoBehaviour
             Debug.Log("不正解！");
         }
 
-        UpdateScoreUI();
+        //UpdateScoreUI();
     }
 
     // 残り時間によるボーナス
-    private void AddTimeBonus(float remainingTime , int totalPoint)
+    private void AddTimeBonus(float remainingTime, int totalPoint)
     {
-        int bonus = Mathf.FloorToInt(remainingTime) * _timeBonus;
+        // CountDownTimerの残り時間を直接取得
+        float time = _countDownTimer._remainingTime;
 
-        _gameData.sumPoint +=(totalPoint + bonus);
-        _totalPoint += bonus;
+        // 残り時間 × ボーナス倍率
+        int bonus = Mathf.FloorToInt(time) * _timeBonus;
 
-        Debug.Log("時間ボーナス：+" + bonus + "点");
+        // 基本得点と時間ボーナスを合計
+        _totalPoint = totalPoint + bonus;
+
+        // 累計スコアに加算
+        _gameData.sumPoint += _totalPoint;
+
+        Debug.Log("残り時間：" + time);
+        Debug.Log("時間ボーナス：" + bonus + "点");
     }
 
     // 得点表示
