@@ -17,8 +17,11 @@ public class ItemJudge : MonoBehaviour
     // アイテムを削除するまでの待ち時間（秒）
     [SerializeField] private float _itemDestroyDelay = 5f;
 
-    //真偽判定後の処理
+    // 真偽判定後の処理
     [SerializeField] private ScoreCalculator _scoreCalculator;
+
+    // アイテムの見た目を変換するスクリプト
+    [SerializeField] private ItemTransformer _itemTransformer;
 
     // 正解したときに呼び出すイベント
     public UnityEvent onCorrect;
@@ -41,17 +44,39 @@ public class ItemJudge : MonoBehaviour
             return;
         }
 
-        // プレイヤーが掴んだアイテムを取得する
+        // プレイヤーが掴んだアイテムを取得
         ItemData selectedItem = _inGameData.playerTakeItem;
 
-        // 掴んだアイテムとお題のアイテムが同じか比較する
+        // 掴んだアイテムとお題のアイテムが同じか比較
         bool isCorrect = selectedItem == _inGameData.picUpItem;
 
         // 判定中に同じ処理が重複して実行されないようにする
         _isJudging = true;
 
-        // 判定結果に応じてイベントを呼び出す
-        _scoreCalculator.CalculateScore(_isJudging, _inGameData.picUpItem, _inGameData.nowSearchTime);
+        // 正誤判定時に元のメッシュを表示
+        if (_itemTransformer != null)
+        {
+            _itemTransformer.RestoreItemMesh(selectedItem);
+        }
 
+        // 判定結果に応じてイベントを呼び出す
+        if (isCorrect)
+        {
+            onCorrect?.Invoke();
+        }
+        else
+        {
+            onIncorrect?.Invoke();
+        }
+
+        // 判定結果をスコア計算に渡す
+        if (_scoreCalculator != null)
+        {
+            _scoreCalculator.CalculateScore(
+                isCorrect,
+                _inGameData.picUpItem,
+                _inGameData.nowSearchTime
+            );
+        }
     }
 }

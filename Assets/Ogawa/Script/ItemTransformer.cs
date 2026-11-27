@@ -1,12 +1,14 @@
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemTransformer : MonoBehaviour
 {
-    // Inspectorから設定する共通モデル
     [SerializeField] private GameObject _commonItemModel;
 
-    // シーン内のすべてのItemDataを変換する
+    // 元のメッシュの表示状態を保存する
+    private Dictionary<ItemData, Renderer[]> _itemRenderers = new();
+    private Dictionary<Renderer, bool> _rendererStates = new();
+
     public void TransformItems()
     {
         if (_commonItemModel == null)
@@ -15,11 +17,9 @@ public class ItemTransformer : MonoBehaviour
             return;
         }
 
-        // シーン内のItemDataを取得
         ItemData[] itemDataList =
             FindObjectsByType<ItemData>(FindObjectsSortMode.None);
 
-        // 取得したアイテムを1つずつ変換
         foreach (ItemData itemData in itemDataList)
         {
             if (itemData == null)
@@ -27,10 +27,25 @@ public class ItemTransformer : MonoBehaviour
                 continue;
             }
 
-            // すでに変換済みなら都バス
+            // すでに変換済みならスキップ
             if (itemData.transform.Find(_commonItemModel.name) != null)
             {
                 continue;
+            }
+
+            // 元のアイテムのメッシュを取得
+            Renderer[] renderers =
+                itemData.GetComponentsInChildren<Renderer>();
+
+            _itemRenderers[itemData] = renderers;
+
+            foreach (Renderer renderer in renderers)
+            {
+                // 元の表示状態を保存
+                _rendererStates[renderer] = renderer.enabled;
+
+                // 元のメッシュを非表示
+                renderer.enabled = false;
             }
 
             // 共通モデルを生成
@@ -39,11 +54,48 @@ public class ItemTransformer : MonoBehaviour
                 itemData.transform
             );
 
-            // ローカル位置と回転を初期化
             commonModel.transform.localPosition = Vector3.zero;
             commonModel.transform.localRotation = Quaternion.identity;
         }
 
         Debug.Log($"アイテム変換完了：{itemDataList.Length}個");
     }
+
+    // 正誤判定時に元のメッシュを表示
+    public void RestoreItemMesh(ItemData itemData)
+    {
+        if (itemData == null ||
+            !_itemRenderers.ContainsKey(itemData))
+        {
+            return;
+        }
+
+        Renderer[] renderers = _itemRenderers[itemData];
+
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer == null)
+            {
+                continue;
+            }
+
+            // 保存していた表示状態に戻す
+            if (_rendererStates.TryGetValue(renderer, out bool wasEnabled))
+            {
+                renderer.enabled = wasEnabled;
+            }
+        }
+
+        // 復元済みのデータを削除
+        _itemRenderers.Remove(itemData);
+
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer != null)
+            {
+                _rendererStates.Remove(renderer);
+            }
+        }
+    }
 }
+

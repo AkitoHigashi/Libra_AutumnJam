@@ -20,7 +20,13 @@ public class CountDownTimer : MonoBehaviour
     bool _isSearchPhase = false;
 
     bool _isActive = false;
-   
+    [SerializeField] UIAnimation _uiAnim;
+    [SerializeField] GameObject _itemPanel;
+
+    [SerializeField] AudioClip _startAudio;
+
+    float _audioLength;
+
     void Start()
     {
         _walkTimeLimit = _inGameData.WalkTime;
@@ -28,7 +34,8 @@ public class CountDownTimer : MonoBehaviour
         _isFinished = false;
         _isSearchPhase = false;
         _remainingTime = _walkTimeLimit;
-
+        _itemPanel.SetActive(false);
+        _audioLength = _startAudio.length;
         StartCoroutine(TimerCount( () => { }));
     }
     
@@ -38,7 +45,9 @@ public class CountDownTimer : MonoBehaviour
     
     public IEnumerator TimerCount(Action onComplete)
     {
+        
         if (_isActive) yield break;
+        yield return new WaitForSeconds(_audioLength);
         _isActive = true;
         
         while (!_isFinished)
@@ -50,7 +59,10 @@ public class CountDownTimer : MonoBehaviour
                 「探す時間」に移行する*/
                 if (!_isSearchPhase)
                 {
+
                     _isSearchPhase = true;
+                    _uiAnim.PlayAnim();
+                    _itemPanel.SetActive(true);
                     _remainingTime = _seachTimeLimit;
                 }
                 else

@@ -7,6 +7,8 @@ using System.Collections;
 /// </summary>
 public class InGameState : MonoBehaviour
 {
+    [SerializeField] private float _answerTime = 1;
+    [SerializeField] private AudioClip _startCountDownClip;
     GameObject _mainGameManager;
     GameObject _inGameManager;
     GameObject _itemManager;
@@ -128,7 +130,7 @@ public class InGameState : MonoBehaviour
         Debug.Log(_gameData.picUpItem.name);
 
         // カウントダウン演出の待機
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_startCountDownClip.length);
 
         onComplete?.Invoke();
     }
@@ -198,6 +200,9 @@ public class InGameState : MonoBehaviour
             Debug.Log("scoreCalculator: " + _scoreCalculator);
             Debug.Log("gameData: " + _gameData);
             _scoreCalculator.CalculateScore(false, _gameData.picUpItem, _gameData.nowSearchTime);
+            //獲得したアイテムを表示時間文表示する
+            _itemTransformer.RestoreItemMesh(_gameData.playerTakeItem);
+            yield return new WaitForSeconds(_answerTime);
             // フィールド上のアイテムを全削除する処理
             _spawner.RemoveAllSpawnedItems();
         }
@@ -205,6 +210,8 @@ public class InGameState : MonoBehaviour
         {
             // アイテムを取得していた場合：お題と一致しているか判定し、正解ならスコア加算・不正解ならライフ減少を行う
             _itemJudge.JudgeItem();
+            //獲得したアイテムを表示時間文表示する
+            yield return new WaitForSeconds(_answerTime);
             // フィールド上のアイテムを全削除する処理
             _spawner.RemoveAllSpawnedItems();
         }
