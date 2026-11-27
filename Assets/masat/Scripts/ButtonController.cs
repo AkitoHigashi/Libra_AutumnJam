@@ -7,7 +7,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] GameObject _nameInputCanvas;
     //[SerializeField] GameObject _playingCanvas;
     [SerializeField] GameObject _resultCanvas;
-
+    ScoreCalculator _scoreCalculator;
     
     void Start()
     {
@@ -36,6 +36,13 @@ public class ButtonController : MonoBehaviour
         _nameInputCanvas.SetActive(false);
         //_playingCanvas.SetActive(false);
         _resultCanvas.SetActive(false);
+    }
+
+    public void RetryButton()
+    {
+        
+        _resultCanvas.SetActive(false);
+
     }
     
 }

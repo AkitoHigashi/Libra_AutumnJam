@@ -8,21 +8,19 @@ public class NameInputSystem : MonoBehaviour
     [SerializeField] Text _displayNameText;
     [SerializeField] Text _errorText;
     [SerializeField] SceneManagement _sceneManagement;
-   
-    void Start()
-    {
-        
-    }
+
+    public string _playerName;
+    
     public void OnConfirmName()
     {
-        string playerName = _nameInputField.text.Trim();
-        if(string.IsNullOrEmpty(playerName))
+         _playerName = _nameInputField.text.Trim();
+        if(string.IsNullOrEmpty(_playerName))
         {
             _errorText.text = "名前を入力してください";
             return;
         }
         
-        _displayNameText.text = playerName;
+        _displayNameText.text = _playerName;
         _sceneManagement.GameSceneLoad();
     
     }

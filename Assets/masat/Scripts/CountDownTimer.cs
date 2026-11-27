@@ -24,7 +24,7 @@ public class CountDownTimer : MonoBehaviour
     [SerializeField] GameObject _itemPanel;
 
     [SerializeField] AudioClip _startAudio;
-
+    
     float _audioLength;
 
     void Start()
@@ -68,9 +68,20 @@ public class CountDownTimer : MonoBehaviour
                 else
                 {
                     //「探す時間」がタイムアップしたら停止する
-
+                    //ただしライフが0より大きい場合、継続する
                     _remainingTime = 0f;
-                    _isFinished = true;
+                    if (_inGameData.life > 0)
+                    {
+                        _isSearchPhase = false;
+                        _remainingTime = _walkTimeLimit;
+                        _itemPanel.SetActive(false);
+                    }
+                    else
+                    {
+                        _remainingTime = 0f;
+                        _isFinished = true;
+                    }
+                    
                 }
             }
             _timerText.text = _remainingTime.ToString("00.00");
